@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emissão de Nota de Serviço</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+  <h1>Emissão de Nota de Serviço</h1>
+
+  <form id="formNotaFiscal">
+    <div id="client">
+    <label for="nomePrestador">Nome do Prestador:</label>
+    <input type="text" id="nomePrestador" required>
+    <br>
+
+    <label for="cep">CEP:</label>
+    <input type="text" id="cep" required>
+    <br>
+
+    <label for="telefone">Telefone:</label>
+    <input type="text" id="telefone" required>
+    <br>
+
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" required>
+    <br>
+
+    <label for="municipioUF">Município/UF:</label>
+    <input type="text" id="municipioUF" required>
+    <br>
+
+    <label for="dataEmissao">Data de Emissão:</label>
+    <input type="date" id="dataEmissao" required>
+    <br>
+
+    <label for="numeroNFS">Número NFS-e:</label>
+    <input type="text" id="numeroNFS" required>
+    <br>
+
+    <label for="serieRPS">Série RPS:</label>
+    <input type="text" id="serieRPS" required>
+    <br>
+
+    <label for="numeroRPS">Número RPS:</label>
+    <input type="text" id="numeroRPS" required>
+    <br>
+
+    <label for="cnpjCpf">CNPJ/CPF:</label>
+    <input type="text" id="cnpjCpf" required>
+    <br>
+
+    <label for="descricaoServico">Descrição do Serviço:</label>
+    <input type="text" id="descricaoServico" required>
+    <br>
+
+    <label for="conjuntoTributacao">Conjunto de Tributações:</label>
+    <input type="text" id="conjuntoTributacao" required>
+    <br>
+
+    <label for="codigoServico">Código do Serviço (opcional):</label>
+    <input type="text" id="codigoServico">
+    <br>
+
+    <label for="valorServico">Valor do Serviço (R$):</label>
+    <input type="number" id="valorServico" required>
+    <br>
+
+
+    <label for="aliquotaISS">Alíquota de ISS (%):</label>
+    <input type="number" id="aliquotaISS" required>
+    <br>
+  </div>
+    <hr>  
+
+  <h2>Informações do Tomador de Serviço</h2>
+  <div id="tomador">
+  <label for="nomeTomador">Nome/Nome Empresarial:</label>
+  <input type="text" id="nomeTomador" required>
+  
+  <label for="enderecoTomador">Endereço:</label>
+  <input type="text" id="enderecoTomador" required>
+
+  <label for="emailTomador">E-mail:</label>
+  <input type="email" id="emailTomador" required>
+
+  <label for="ufMunicipioTomador">Município/UF:</label>
+  <input type="text" id="ufMunicipioTomador" required>
+
+  <label for="cepTomador">CEP:</label>
+  <input type="text" id="cepTomador" required>
+
+  <label for="telefoneTomador">Telefone:</label>
+  <input type="text" id="telefoneTomador">
+
+  <button type="button" onclick="calcularNotaFiscal()">EMISSÂO DE NOTA</button>
+</form>
+</div>
+  <div id="notaFiscal">
+    <img id="logo" src="./assets/Qrcod.png" alt="Logo">
+    <h2>CUPOM PARA SIMPLES CONFERÊNCIA</h2>
+    <p>NÃO É DOCUMENTO FISCAL</p>
+    <div class="emissao">
+      <div id="client">
+    <p><strong>Prestador de Serviço:</strong> <span id="prestadorNota"></span></p>
+    <p><strong>Endereço:</strong> <span id="enderecoNota"></span></p>
+    <p><strong>Telefone:</strong> <span id="telefoneNota"></span></p>
+    <p><strong>E-mail:</strong> <span id="emailNota"></span></p>
+    <p><strong>UF/Município:</strong> <span id="ufMunicipioNota"></span></p>
+   
+    <p><strong>Data de Emissão:</strong> <span id="dataEmissaoNota"></span></p>
+    <p><strong>Número NFS-e:</strong> <span id="numeroNFSNota"></span></p>
+    <p><strong>Série RPS:</strong> <span id="serieRPSNota"></span></p>
+    <p><strong>Número RPS:</strong> <span id="numeroRPSNota"></span></p>
+    <p><strong>CNPJ/CPF:</strong> <span id="cnpjCpfNota"></span></p>
+    <p><strong>Descrição do Serviço:</strong> <span id="descricaoServicoNota"></span></p>
+    <p><strong>Conjunto de Tributações:</strong> <span id="conjuntoTributacaoNota"></span></p>
+    <p><strong>Código do Serviço:</strong> <span id="codigoServicoNota"></span></p>
+    <p><strong>Valor do Serviço (R$):</strong> <span id="valorServicoNota"></span></p>
+    <p><strong>Alíquota de ISS (%):</strong> <span id="aliquotaISSNota"></span></p>
+    <p><strong>Valor do ISS (R$):</strong> <span id="valorISSNota"></span></p>
+    <p><strong>Total:</strong> <span id="totalNota"></span></p>
+  </div>
+  
+      <h2>Informações do Tomador</h2>
+      <div id="tomador" class="imprimir">
+      <p><strong>Nome do Tomador:</strong> <span id="nomeTomadorNota"></span></p>
+      <p><strong>Endereço do Tomador:</strong> <span id="enderecoTomadorNota"></span></p>
+      <p><strong>Telefone do Tomador:</strong> <span id="telefoneTomadorNota"></span></p>
+      <p><strong>E-mail do Tomador:</strong> <span id="emailTomadorNota"></span></p>
+      <p><strong>UF/Município do Tomador:</strong> <span id="ufMunicipioTomadorNota"></span></p>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <br>
+  <br>
+
+<di>
+  <button onclick="calcularNotaFiscal(); gerarPDF();">EMISSÂO DE NOTA - PDF</button>
+</di>
+  
+  <script src="script.js"></script>
+</body>
+</html>
